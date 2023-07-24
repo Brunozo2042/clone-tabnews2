@@ -1,4 +1,4 @@
-function Home(){
+function Home() {
     return <h1>Teste Deploy1</h1>;
 }
 

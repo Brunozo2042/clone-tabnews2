@@ -1,4 +1,4 @@
-import database from "../../../../infra/database.js"
+import database from "infra/database.js"
 
 // para validar os testes é necessário o servidor web e 
 // o serviço do banco de dados estarem rodando

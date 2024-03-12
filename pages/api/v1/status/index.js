@@ -9,13 +9,14 @@ import database from "infra/database.js"
 async function status(request, response) {
     //Data
     const updatedAt = new Date().toISOString();
+    const dbName = process.env.POSTGRES_DB;
 
     const dbVersion = await database.query("SHOW server_version;");
     const dbMaxCon = await database.query("SHOW max_connections;");
-    const dbUsedCon = await database.query("SELECT count(*) AS conexoes_ativas FROM pg_stat_activity;");
-
-    console.log(dbMaxCon.rows[0].max_connections);
-
+    const dbUsedCon = await database.query({
+        text: "SELECT count(*) AS conexoes_ativas FROM pg_stat_activity WHERE datname = $1;",
+        values: [dbName],
+    });
 
     //Versão do postgress
     const pgVersion = dbVersion.rows[0].server_version;
@@ -31,7 +32,7 @@ async function status(request, response) {
         dependecies: {
             database: {
                 version: pgVersion,
-                max_conections: maxConections,
+                max_connections: maxConections,
                 opened_connections: openedConnections,
             }
         }

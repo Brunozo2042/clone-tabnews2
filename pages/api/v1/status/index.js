@@ -10,7 +10,7 @@ async function status(request, response) {
     //Data
     const updatedAt = new Date().toISOString();
     const dbName = process.env.POSTGRES_DB;
-
+    
     const dbVersion = await database.query("SHOW server_version;");
     const dbMaxCon = await database.query("SHOW max_connections;");
     const dbUsedCon = await database.query({

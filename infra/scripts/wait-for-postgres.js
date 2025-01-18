@@ -9,7 +9,11 @@ function checkPostgres() {
     function handleReturn(error, stdout) {
         if (stdout.search("accepting connections") === -1) {
             // Move o cursor para o início da linha e exibe o relógio junto com a mensagem
-            process.stdout.write(`\r${relogio[contador % relogio.length]} ⌛ Aguardando PostgreSQL aceitar conexões...`);
+            process.stdout.write(
+                `\r${
+                    relogio[contador % relogio.length]
+                } ⌛ Aguardando PostgreSQL aceitar conexões...`,
+            );
             contador++;
 
             // Chama a função novamente após 250ms

@@ -1,4 +1,4 @@
-import { Client } from 'pg'
+import { Client } from "pg";
 
 //comando para inicializar o serviço do banco de dados
 //docker compose -f infra/compose.yaml up -d
@@ -17,14 +17,14 @@ async function query(queryObject) {
     }
 }
 
-async function getNewCliente(){
+async function getNewCliente() {
     const client = new Client({
         host: process.env.POSTGRES_HOST,
         port: process.env.POSTGRES_PORT,
         user: process.env.POSTGRES_USER,
         database: process.env.POSTGRES_DB,
         password: process.env.POSTGRES_PASSWORD,
-        ssl:getSSLValues()
+        ssl: getSSLValues(),
     });
 
     await client.connect();
@@ -33,15 +33,15 @@ async function getNewCliente(){
 
 export default {
     query,
-    getNewCliente
+    getNewCliente,
 };
 
 function getSSLValues() {
     if (process.env.POSTGRES_CA) {
-      return {
-        ca: process.env.POSTGRES_CA,
-      };
+        return {
+            ca: process.env.POSTGRES_CA,
+        };
     }
-  
+
     return process.env.NODE_ENV === "production" ? true : false;
-  }
+}

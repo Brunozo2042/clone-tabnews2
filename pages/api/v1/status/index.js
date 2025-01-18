@@ -1,6 +1,6 @@
-import database from "infra/database.js"
+import database from "infra/database.js";
 
-// para validar os testes é necessário o servidor web e 
+// para validar os testes é necessário o servidor web e
 // o serviço do banco de dados estarem rodando
 
 //comando para inicializar o servidor web
@@ -10,7 +10,7 @@ async function status(request, response) {
     //Data
     const updatedAt = new Date().toISOString();
     const dbName = process.env.POSTGRES_DB;
-    
+
     const dbVersion = await database.query("SHOW server_version;");
     const dbMaxCon = await database.query("SHOW max_connections;");
     const dbUsedCon = await database.query({
@@ -34,8 +34,8 @@ async function status(request, response) {
                 version: pgVersion,
                 max_connections: maxConections,
                 opened_connections: openedConnections,
-            }
-        }
+            },
+        },
     });
 }
 

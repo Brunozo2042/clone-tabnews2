@@ -5,7 +5,7 @@ beforeAll(async () => {
     await orchestrator.clearDatabase();
 });
 
-describe("POST /api/v1/migrations", () => {
+describe("GET /api/v1/migrations", () => {
     describe("Anonymous user", () => {
         test("Retrieving pending migrations", async () => {
             const response = await fetch(

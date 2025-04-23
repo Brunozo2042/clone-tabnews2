@@ -1,4 +1,5 @@
 import { Client } from "pg";
+import { ServiceError } from "./errors";
 
 //comando para inicializar o serviço do banco de dados
 //docker compose -f infra/compose.yaml up -d
@@ -10,9 +11,11 @@ async function query(queryObject) {
         const result = await client.query(queryObject);
         return result;
     } catch (error) {
-        console.error("\n Erro dentro do catch do database.js");
-        console.error(error);
-        throw error;
+        const serviceErrorObject = new ServiceError({
+            cause: error,
+            message: "Erro ao executar a query no banco de dados.",
+        });
+        throw serviceErrorObject;
     } finally {
         await client?.end();
     }

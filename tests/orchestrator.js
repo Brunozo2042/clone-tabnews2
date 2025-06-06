@@ -1,6 +1,7 @@
 // script para aguarda algum outro serviço finalizar para executar outro
 import retry from "async-retry";
 import database from "infra/database";
+import { migrator } from "models/migrator";
 
 async function waitForAllServices() {
     await waitForWebServer();
@@ -25,9 +26,14 @@ async function clearDatabase() {
     await database.query("drop schema public cascade; create schema public");
 }
 
+async function runPendindMigrations() {
+    await migrator.runPendingMigrations();
+}
+
 const orchestrator = {
     waitForAllServices,
     clearDatabase,
+    runPendindMigrations
 };
 
 export default orchestrator;

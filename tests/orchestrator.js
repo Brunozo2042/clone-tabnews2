@@ -33,7 +33,7 @@ async function runPendindMigrations() {
 const orchestrator = {
     waitForAllServices,
     clearDatabase,
-    runPendindMigrations
+    runPendindMigrations,
 };
 
 export default orchestrator;

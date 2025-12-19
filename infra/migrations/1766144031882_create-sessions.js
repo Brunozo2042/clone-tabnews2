@@ -1,28 +1,19 @@
 exports.up = (pgm) => {
-  pgm.createTable("users", {
+  pgm.createTable("sessions", {
     id: {
       type: "uuid",
       primaryKey: true,
       default: pgm.func("gen_random_uuid()"),
     },
 
-    // for reference, Gitub limits usernames to 39 characters
-    username: {
-      type: "varchar(30)",
+    token: {
+      type: "varchar(96)",
       notNull: true,
       unique: true,
     },
 
-    // Why 254 in length? https://stackoverflow.com/a/1199238
-    email: {
-      type: "varchar(254)",
-      notNull: true,
-      unique: true,
-    },
-
-    // Why 60 in length? https://www.npmjs.com/package/bcrypt#hash-info
-    password: {
-      type: "varchar(60)",
+    user_id: {
+      type: "uuid",
       notNull: true,
     },
 
@@ -32,6 +23,12 @@ exports.up = (pgm) => {
       notNull: true,
       default: pgm.func("timezone('UTC', now())"),
     },
+
+    expires_at: {
+      type: "timestamptz",
+      notNull: true,
+    },
+
     updated_at: {
       type: "timestamp",
       notNull: true,

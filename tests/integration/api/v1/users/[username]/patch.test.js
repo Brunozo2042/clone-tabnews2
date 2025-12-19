@@ -6,7 +6,7 @@ import password from "models/password";
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
   await orchestrator.clearDatabase();
-  await orchestrator.runPendindMigrations();
+  await orchestrator.runPendingMigrations();
 });
 
 describe("PATCH /api/v1/users/[username]", () => {

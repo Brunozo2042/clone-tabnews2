@@ -72,6 +72,10 @@ async function getLastEmail() {
   const emails = await response.json();
   const lastEmailItem = emails.pop();
 
+  if(!lastEmailItem) {
+    return null;
+  }
+
   const emailTextRepsponse = await fetch(
     `${emailHttpUrl}/messages/${lastEmailItem.id}.plain`,
   );

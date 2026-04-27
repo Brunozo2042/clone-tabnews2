@@ -9,6 +9,7 @@ import {
 import * as cookie from "cookie";
 import session from "models/session.js";
 import user from "models/user";
+import authorization from "models/authorization.js";
 
 function onNoMatchHandler(request, response) {
   const publicErrorObject = new MethodNotAllowedError();
@@ -16,7 +17,11 @@ function onNoMatchHandler(request, response) {
 }
 
 function onErrorHandler(error, request, response) {
-  if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+  if (
+    error instanceof ValidationError ||
+    error instanceof NotFoundError ||
+    error instanceof ForbiddenError
+  ) {
     return response.status(error.statusCode).json(error);
   }
 
@@ -93,7 +98,8 @@ function injectAnonymousUser(request) {
 function canRequest(feature) {
   return function canRequestMiddleware(request, response, next) {
     const userTryingToRequest = request.context.user;
-    if (userTryingToRequest.features.includes(feature)) {
+
+    if (authorization.can(userTryingToRequest, feature)) {
       return next();
     }
 

@@ -15,6 +15,7 @@ async function query(queryObject) {
       cause: error,
       message: "Erro ao executar a query no banco de dados.",
     });
+
     throw serviceErrorObject;
   } finally {
     await client?.end();

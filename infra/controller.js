@@ -61,7 +61,7 @@ async function clearSessionCookie(response) {
   response.setHeader("Set-Cookie", setCookie);
 }
 
-async function injectAnounymousOrUser(request, response, next) {
+async function injectAnonymousOrUser(request, response, next) {
   // 1. Se o cookie `session_id` existe, injetar usuário
   if (request.cookies?.session_id) {
     await injectAuthenticatedUser(request);
@@ -117,7 +117,7 @@ const controller = {
   },
   setSessionCookie,
   clearSessionCookie,
-  injectAnounymousOrUser,
+  injectAnonymousOrUser,
   canRequest,
 };
 
